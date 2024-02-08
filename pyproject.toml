@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "endoreg-client-manager"
+version = "0.1.0"
+description = "Django application to interact with EndoReg services on clients."
+authors = ["Thomas J. Lux"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "^5.0.2"
+djangorestframework = "^3.14.0"
+endoreg-db = "^0.1.0"
+django-bootstrap5 = "^23.4"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
