@@ -9,7 +9,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, poetry2nix, tennis-data }:
+  outputs = { self, nixpkgs, flake-utils, poetry2nix }:
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
@@ -27,17 +27,16 @@
             ];
 
             # Define Environment Variables
-            DJANGO_SETTINGS_MODULE="endoreg_home.settings_dev";
+            DJANGO_SETTINGS_MODULE="endoreg_client_manager.settings";
 
             # Define Python venv
             venvDir = ".venv";
             postShellHook = ''
               mkdir -p data
-              ln -snf ${tennis-data}/atp_matches_2020.csv data/dataset.csv
 
               pip install --upgrade pip
               poetry update
-
+              
               export DJANGO_SECRET_KEY=$(cat .env/secret)
 
               # print out the environment variables
