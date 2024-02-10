@@ -18,6 +18,11 @@ celery = {extras = ["redis"], version = "^5.3.6"}
 django-celery-beat = "^2.5.0"
 flower = "^2.0.1"
 gunicorn = "^21.2.0"
+django-admin-interface = "^0.28.5"
+django-flat-responsive = "^2.0"
+django-flat-theme = "^1.1.4"
+djlint = "^1.34.1"
+whitenoise = {extras = ["brotli"], version = "^6.6.0"}
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"

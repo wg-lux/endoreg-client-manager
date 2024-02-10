@@ -23,6 +23,18 @@ To schedule tasks, "django_celery_beat" must be added to INSTALLED_APPS
 
 make sure that celery beat is running, we do this in our flake.nix
 
+### Scheduling new tasks:
+1. Generate an empty migration file in one of your apps (e.g., data_collector):
+'python manage.py makemigrations data_collector --empty --name schedule_move_files_task'
+
+2. In the migration, we nee to reference 
+- the currently latest migration of the app in which the task is defined which is just the one before the currently created one
+- the currently latest migration of django_celery_beat which we can find out by running: ''
+
+## Static Files
+We host staticfiles using whitenoise: https://whitenoise.readthedocs.io/en/latest/django.html
+
+
 ## Setup Poetry Django App
 - if secrets are necessary, create and insert them in NixOS
     - this application requires a django secret provided at "/home/agl-admin/.config/django-secret"

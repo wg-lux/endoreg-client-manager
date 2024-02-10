@@ -30,26 +30,36 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    "whitenoise.runserver_nostatic", # above staticfiles, useful for development
     'django.contrib.staticfiles',
     "rest_framework",
     "django_bootstrap5",
+
+    # 'admin_interface',
+    # 'flat_responsive',  # optional for django-admin-interface
+    # 'flat',  # optional for django-admin-interface
+    # 'colorfield',  # required for django-admin-interface
     # "endoreg_db.apps.EndoregDbConfig",
+    "content_management.apps.ContentManagementConfig",
     "case_merger.apps.CaseMergerConfig",
     "data_collector.apps.DataCollectorConfig",
     "report_processor.apps.ReportProcessorConfig",
     "data_validation.apps.DataValidationConfig",
     "video_processor.apps.VideoProcessorConfig",
     "django_celery_beat",
+    "celery",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware", # Should be placed directly after the Django Security Middleware
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'content_management.middleware.ThemeMiddleware', # Darkmode
 ]
 
 ROOT_URLCONF = 'endoreg_client_manager.urls'
@@ -81,6 +91,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
 }
 
 
