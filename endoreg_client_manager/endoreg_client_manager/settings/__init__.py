@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     "video_processor.apps.VideoProcessorConfig",
     "django_celery_beat",
     "celery",
+
+    # agl packages
+    "endoreg_db.apps.EndoregDbConfig",
 ]
 
 MIDDLEWARE = [

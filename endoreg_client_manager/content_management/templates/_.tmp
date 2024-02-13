@@ -1,0 +1,26 @@
+ADD ABOVE /HTML IN BASE.HTLM
+
+
+
+
+
+<script>
+    document.getElementById('dark-mode-toggle').addEventListener('click', function(e) {
+        e.preventDefault();
+        var currentTheme = document.getElementById('theme-stylesheet').href.includes('dark.css') ? 'dark' : 'light';
+        fetch("{% url 'toggle_dark_mode' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 'currentTheme': currentTheme }),
+            credentials: 'same-origin'
+        }).then(function(response) {
+            if (response.ok) {
+                // Reload the page to apply the theme change.
+                location.reload();
+            }
+        });
+    });
+</script>

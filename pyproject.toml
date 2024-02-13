@@ -23,6 +23,8 @@ django-flat-responsive = "^2.0"
 django-flat-theme = "^1.1.4"
 djlint = "^1.34.1"
 whitenoise = {extras = ["brotli"], version = "^6.6.0"}
+endoreg-db = "^0.2.0"
+pytesseract = "^0.3.10"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
