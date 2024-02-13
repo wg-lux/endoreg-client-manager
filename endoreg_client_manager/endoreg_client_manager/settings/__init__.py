@@ -4,7 +4,7 @@ from .default_paths import (
     IMPORT_DIR,
     RAW_DATA_DIR,
 )
-from .static import STATIC_URL, STATIC_ROOT
+from .static import STATIC_URL, STATIC_ROOT, STORAGES
 from .internationalization import LANGUAGE_CODE, TIME_ZONE, USE_I18N, USE_TZ
 from .celery import CELERY_BROKER_URL
 import warnings
@@ -93,11 +93,7 @@ DATABASES = {
     }
 }
 
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+
 
 
 # Password validation
