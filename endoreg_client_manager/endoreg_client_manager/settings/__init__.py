@@ -1,12 +1,13 @@
 import os
 from .default_paths import (
     BASE_DIR,
-    IMPORT_DIR,
-    RAW_DATA_DIR,
+    DROPOFF_DIR,
+    PSEUDO_DIR,
+    PROCESSED_DIR,
 )
 from .static import STATIC_URL, STATIC_ROOT, STORAGES
 from .internationalization import LANGUAGE_CODE, TIME_ZONE, USE_I18N, USE_TZ
-from .celery import CELERY_BROKER_URL
+# from .celery import CELERY_BROKER_URL
 import warnings
 
 
