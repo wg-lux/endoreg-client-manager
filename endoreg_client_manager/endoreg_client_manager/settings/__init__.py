@@ -1,16 +1,37 @@
 import os
 from .default_paths import (
     BASE_DIR,
-    DROPOFF_DIR,
-    PSEUDO_DIR,
-    PROCESSED_DIR,
+    # DROPOFF_DIR,
+    # PSEUDO_DIR,
+    # PROCESSED_DIR,
 )
 from .static import STATIC_URL, STATIC_ROOT, STORAGES
 from .internationalization import LANGUAGE_CODE, TIME_ZONE, USE_I18N, USE_TZ
-# from .celery import CELERY_BROKER_URL
-import warnings
+from .celery import *
+from .logging_conf import LOGGING
+from dotenv import load_dotenv
+from pathlib import Path
+from .utils import env_var_to_list, create_glob_expression
+
+load_dotenv()
+
+DROPOFF_DIR = Path(os.environ.get("DROPOFF_DIR", BASE_DIR / "FIXME"))
+PSEUDO_DIR = Path(os.environ.get("PSEUDO_DIR", BASE_DIR / "FIXME"))
+PROCESSED_DIR = Path(os.environ.get("PROCESSED_DIR", BASE_DIR / "FIXME"))
 
 
+
+# Importing file extensions from environment variables
+video_filetypes = env_var_to_list("VIDEO_FILETYPES")
+report_filetypes = env_var_to_list("REPORT_FILETYPES")
+
+# Creating glob expressions for each list
+video_glob_expression = create_glob_expression(video_filetypes)
+report_glob_expression = create_glob_expression(report_filetypes)
+
+# Combining both lists to create a glob expression for all file types
+combined_filetypes = video_filetypes + report_filetypes
+combined_glob_expression = create_glob_expression(combined_filetypes)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', "django-insecure-#&z!")
@@ -36,11 +57,11 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_bootstrap5",
 
-    # 'admin_interface',
-    # 'flat_responsive',  # optional for django-admin-interface
-    # 'flat',  # optional for django-admin-interface
-    # 'colorfield',  # required for django-admin-interface
-    # "endoreg_db.apps.EndoregDbConfig",
+    'admin_interface',
+    'flat_responsive',  # optional for django-admin-interface
+    'flat',  # optional for django-admin-interface
+    'colorfield',  # required for django-admin-interface
+
     "content_management.apps.ContentManagementConfig",
     "case_merger.apps.CaseMergerConfig",
     "data_collector.apps.DataCollectorConfig",
@@ -48,6 +69,7 @@ INSTALLED_APPS = [
     "data_validation.apps.DataValidationConfig",
     "video_processor.apps.VideoProcessorConfig",
     "django_celery_beat",
+    "django_celery_results",
     "celery",
 
     # agl packages

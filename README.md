@@ -1,6 +1,9 @@
 # endoreg-client-manager
 Django Webapp to run services on EndoReg Clients
 
+## TMP
+`python -m celery -A endoreg_client_manager worker -l info` # -E would add task monitoring
+
 ## Cheat-Sheet
 endoreg-import-file-mover /home/agl-admin/endoreg-client-files/import /home/endoreg-client-files/raw/data
 
@@ -11,10 +14,8 @@ for i in *.MOV; do
   ffmpeg -i "$i" -pix_fmt yuv420p -c:v h264_nvenc -preset slow -qp 18 -c:a aac -b:a 192k "${i%.MOV}.mp4"
 done
 
-
-
-NINJVP_S001_S001_T016.MOV
-
+## Configuration
+currently some environment variables are set in endoreg_client_manger/.env #FIXME
 
 ## Scheduled tasks
 We use Cerlery for that. Main configuration is located in the same folder as settings.py (./endoreg_client_manager/endoreg_client_manager/celery.py)

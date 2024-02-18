@@ -388,6 +388,21 @@ python-crontab = ">=2.3.4"
 tzdata = "*"
 
 [[package]]
+name = "django-celery-results"
+version = "2.5.1"
+description = "Celery result backends for Django."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django_celery_results-2.5.1-py3-none-any.whl", hash = "sha256:0da4cd5ecc049333e4524a23fcfc3460dfae91aa0a60f1fae4b6b2889c254e01"},
+    {file = "django_celery_results-2.5.1.tar.gz", hash = "sha256:3ecb7147f773f34d0381bac6246337ce4cf88a2ea7b82774ed48e518b67bb8fd"},
+]
+
+[package.dependencies]
+celery = ">=5.2.7,<6.0"
+Django = ">=3.2.18"
+
+[[package]]
 name = "django-colorfield"
 version = "0.11.0"
 description = "color field for django models with a nice color-picker in the admin."
@@ -923,6 +938,20 @@ files = [
 six = ">=1.5"
 
 [[package]]
+name = "python-dotenv"
+version = "1.0.1"
+description = "Read key-value pairs from a .env file and set them as environment variables"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "python-dotenv-1.0.1.tar.gz", hash = "sha256:e324ee90a023d808f1959c46bcbc04446a10ced277783dc6ee09987c37ec10ca"},
+    {file = "python_dotenv-1.0.1-py3-none-any.whl", hash = "sha256:f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a"},
+]
+
+[package.extras]
+cli = ["click (>=5.0)"]
+
+[[package]]
 name = "python-slugify"
 version = "8.0.4"
 description = "A Python slugify application that also handles Unicode"
@@ -1261,4 +1290,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "4b6e2ec36ed239843ae88712fec0f72a3f19a087fc89fa0c9f4bbbe2ec19f55e"
+content-hash = "68a84160f2e4b6acb740b843845e7acf394f3bb601e7649a42b9a77d192cbddc"
