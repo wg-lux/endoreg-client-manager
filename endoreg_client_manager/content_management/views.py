@@ -54,3 +54,6 @@ def about_us(request):
 
 def coloreg_security_concept(request):
     return render(request, "coloreg/security_concept.html")
+
+def help_page(request):
+    return render(request, 'help.html')

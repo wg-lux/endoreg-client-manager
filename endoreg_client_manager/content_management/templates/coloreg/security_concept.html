@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
 <div class="container py-5">
@@ -6,7 +6,7 @@
     
     <section class="mb-5">
         <h2 class="mb-3">Authentication and User-Access Management</h2>
-        <p>Summary: To counteract unauthorized access and safeguard sensitive information, we employ comprehensive authentication and user access management protocols. Utilizing OpenVPN or Wireguard ensures secure network connections by establishing encrypted tunnels, which are critical for protecting data in transit against interception or eavesdropping. For secure data storage, we use LUKS for SSD encryption, which guards against data theft by making the information inaccessible without the correct passphrase. Additionally, NFC technology is implemented for user authentication, providing a seamless yet secure method for verifying user identity, significantly reducing the risk of credential theft or unauthorized access.</p>
+        <p>Summary: To counteract unauthorized access and safeguard sensitive information, we employ comprehensive authentication and user access management protocols. Utilizing OpenVPN or Wireguard ensures secure network connections by establishing encrypted tunnels, which are critical for protecting data in transit against interception or eavesdropping. For secure data storage, we use LUKS for SSD encryption, which guards against data theft by making the information inaccessible without the correct passphrase. Additionally, NFC technology is implemented (Work in Progress) for user authentication, providing a seamless yet secure method for verifying user identity, significantly reducing the risk of credential theft or unauthorized access.</p>
     </section>
     
     <section class="mb-5">
@@ -69,4 +69,4 @@
         </ul>
     </section>
 </div>
-{% endblock %}
+{% endblock content %}
