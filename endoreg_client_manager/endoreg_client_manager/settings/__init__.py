@@ -1,9 +1,9 @@
 import os
 from .default_paths import (
     BASE_DIR,
-    # DROPOFF_DIR,
-    # PSEUDO_DIR,
-    # PROCESSED_DIR,
+    DROPOFF_DIR,
+    PSEUDO_DIR,
+    PROCESSED_DIR,
 )
 from .static import STATIC_URL, STATIC_ROOT, STORAGES
 from .internationalization import LANGUAGE_CODE, TIME_ZONE, USE_I18N, USE_TZ
@@ -12,14 +12,9 @@ from .logging_conf import LOGGING
 from dotenv import load_dotenv
 from pathlib import Path
 from .utils import env_var_to_list, create_glob_expression
+from .database import DATABASES, DATABASE_ROUTERS
 
 load_dotenv()
-
-DROPOFF_DIR = Path(os.environ.get("DROPOFF_DIR", BASE_DIR / "FIXME"))
-PSEUDO_DIR = Path(os.environ.get("PSEUDO_DIR", BASE_DIR / "FIXME"))
-PROCESSED_DIR = Path(os.environ.get("PROCESSED_DIR", BASE_DIR / "FIXME"))
-
-
 
 # Importing file extensions from environment variables
 video_filetypes = env_var_to_list("VIDEO_FILETYPES")
@@ -107,18 +102,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'endoreg_client_manager.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 
 
 
