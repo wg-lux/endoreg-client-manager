@@ -23,3 +23,15 @@ urlpatterns = [
     path('', include('content_management.urls')),
     
 ]
+
+
+
+# While WhiteNoise is excellent for static files, Django recommends against 
+# serving media files (like uploaded videos) in a production environment. 
+# In development, you can add the following to your urls.py to serve media files:
+from django.conf import settings
+from django.conf.urls.static import static
+
+# if settings.DEBUG:
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

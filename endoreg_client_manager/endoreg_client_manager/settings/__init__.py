@@ -1,18 +1,25 @@
 import os
-from .default_paths import (
-    BASE_DIR,
-    DROPOFF_DIR,
-    PSEUDO_DIR,
-    PROCESSED_DIR,
-)
-from .static import STATIC_URL, STATIC_ROOT, STORAGES
+from .default_paths import *
+#(
+#     BASE_DIR,
+#     DROPOFF_DIR,
+#     PSEUDO_DIR,
+#     PROCESSED_DIR,
+# )
+from .static import *
 from .internationalization import LANGUAGE_CODE, TIME_ZONE, USE_I18N, USE_TZ
 from .celery import *
 from .logging_conf import LOGGING
 from dotenv import load_dotenv
 from pathlib import Path
 from .utils import env_var_to_list, create_glob_expression
-from .database import DATABASES, DATABASE_ROUTERS
+from .database import (
+    DATABASES,
+    DATABASE_ROUTERS
+)
+
+ENDOREG_CENTER_ID = 1
+
 
 load_dotenv()
 
@@ -129,3 +136,5 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+from .celery_schedule import CELERY_BEAT_SCHEDULE

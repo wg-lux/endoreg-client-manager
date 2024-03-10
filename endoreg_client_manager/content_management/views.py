@@ -30,7 +30,7 @@ def landing_page(request):
     #     session.delete()
     dropoff_dir = DROPOFF_DIR.resolve().as_posix()
     pseudo_dir = PSEUDO_DIR.resolve().as_posix()
-    collect_data.delay(dropoff_dir, pseudo_dir, combined_glob_expression)
+    collect_data(dropoff_dir, pseudo_dir, combined_glob_expression)
     return render(request, "landing_page.html")
 
 # views.py

@@ -21,6 +21,12 @@
           devShell."${system}" = pkgs.mkShell {
             buildInputs = [ 
               pkgs.poetry
+              pkgs.python3Packages.numpy
+              pkgs.python3Packages.opencv4
+              pkgs.stdenv
+              pkgs.tesseract
+              # pkgs.stdenv.cc.cc.lib
+              pkgs.pam
 
               # Make venv (not very nixy but easy workaround to use current non-nix-packaged python module)
               pkgs.python3Packages.venvShellHook
@@ -36,12 +42,12 @@
 
               pip install --upgrade pip
               poetry update
+
+              # install dev dependiencies
+              pip install -e /home/agl-admin/dev/agl-frame-extractor
+              pip install -e /home/agl-admin/dev/endoreg-db
               
               export DJANGO_SECRET_KEY=$(cat .env/secret)
-
-              # print out the environment variables
-              echo "DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY"
-
             '';
           };
 

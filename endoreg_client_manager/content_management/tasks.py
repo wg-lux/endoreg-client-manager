@@ -7,7 +7,7 @@ import warnings
 from .utils import find_files
 
 
-@shared_task
+# @shared_task
 def collect_data(dropoff_dir, pseudo_dir, filter_expression="*"):
     # get the DROPOFF and PSEUDO directories from settings
 

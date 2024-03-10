@@ -1,6 +1,12 @@
 # endoreg-client-manager
 Django Webapp to run services on EndoReg Clients
 
+## Initial Setup
+- Create Superuser: `python manage.py shell"
+- manual migrations (?)
+  - python manage.py migrate django_celery_results
+  - python manage.py migrate data_collector
+
 ## TMP
 `python -m celery -A endoreg_client_manager worker -l info` # -E would add task monitoring
 
@@ -35,93 +41,41 @@ make sure that celery beat is running, we do this in our flake.nix
 ## Static Files
 We host staticfiles using whitenoise: https://whitenoise.readthedocs.io/en/latest/django.html
 
+# Devlog
+## 2024-03-10 Debugging RawVideofile
 
-## Setup Poetry Django App
-- if secrets are necessary, create and insert them in NixOS
-    - this application requires a django secret provided at "/home/agl-admin/.config/django-secret"
+/mnt/hdd-sensitive/Pseudo/import/video/e2a73bd9-fe4a-4608-a451-b19a609001d5.mp4
+
+video = RawVideoFile.objects.get()
+
+from endoreg_db.models import RawVideoFile
+from pathlib import Path
+video = RawVideoFile.objects.get()
+video.update_text_metadata()
+
+fp = Path("/mnt/hdd-sensitive/Pseudo/import/video/8ac93c6f-68f9-42b8-ab84-f9d0e5835df1.mp4")
+pd = Path("/mnt/hdd-sensitive/Pseudo/import/video/")
+frame_dir = Path("/home/agl-admin/endoreg-client-manager/endoreg_client_manager/data/tmp/raw_frames")
+video = RawVideoFile.create_from_file(fp,pd, center_name = "university_hospital_wuerzburg", processor_name = "olympus_cv_1500", frame_dir_parent=frame_dir)
 
 
-## Create Encrypted Drive
-Encrypting and using an external hard drive on a NixOS (a Linux distribution) involves several steps, including formatting the drive, encrypting it, and then mounting it for use. Here's a general guide:
+## OCR
 
-### 1. Identify the Drive
-First, you need to identify the external hard drive's device name.
+from endoreg_db.models import RawVideoFile
+from pathlib import Path
 
-- Connect the external hard drive to your NixOS machine.
-- Open a terminal and run the following command to list all connected storage devices:
-  ```bash
-  lsblk
-  ```
-- Identify your external hard drive from the list (e.g., `/dev/sdx`).
+fn = "1e959443-69b1-4004-bd5a-3431f2a16d7f.mp4"
+fp = Path(f"/mnt/hdd-sensitive/DropOff/data/{fn}")
+pd = Path("/mnt/hdd-sensitive/Pseudo/import/video/")
+frame_dir = Path("/home/agl-admin/endoreg-client-manager/")
+center_name = "university_hospital_wuerzburg"
+processor_name = "olympus_cv_1500"
 
-### 2. Format the Drive (Optional)
-If the drive is new or you want to erase its current content, you'll need to format it. **Warning: This will erase all data on the drive.**
+vid = RawVideoFile.create_from_file(
+  file_path = fp,
+  video_dir_parent = pd,
+  center_name = center_name,
+  processor_name = processor_name,
+  frame_dir_parent = frame_dir,
+)
 
-- Use the `fdisk` or `parted` command to create a new partition.
-- Example with `fdisk`:
-  ```bash
-  sudo fdisk /dev/sdx
-  ```
-
-### 3. Install Cryptsetup
-Ensure you have `cryptsetup` installed, as it's required for the next steps.
-
-- Install `cryptsetup` in temporary shell:
-  ```bash
-  nix-shell cryptsetup
-  ```
-
-### 4. Encrypt the Drive
-You'll use LUKS (Linux Unified Key Setup) for encryption.
-(assuming drive is "/dev/sda")
-- Encrypt the partition:
-  ```bash
-  sudo cryptsetup luksFormat /dev/sda1
-  ```
-- Open the encrypted partition:
-  ```bash
-  sudo cryptsetup open /dev/sdx1 endoreg-sensitive-data
-  ```
-
-### 5. Create a Filesystem
-Now, create a filesystem on the encrypted partition.
-
-- Common choices are ext4, NTFS, or FAT32. For Linux systems, ext4 is typical:
-  ```bash
-  sudo mkfs.ext4 /dev/mapper/endoreg-sensitive-data
-  ```
-
-### 6. Mount the Drive
-Mount the drive to use it.
-
-- Create a mount point:
-  ```bash
-  sudo mkdir /mnt/endoreg-sensitive-data
-  ```
-- Mount the encrypted drive:
-  ```bash
-  sudo mount /dev/mapper/endoreg-sensitive-data /mnt/endoreg-sensitive-data
-  ```
-
-### 7. Using the Drive
-Now the drive is ready to use. You can access it via `/mnt/endoreg-sensitive-data`.
-
-### 8. Unmounting and Closing
-When finished, unmount and close the encrypted drive:
-
-- Unmount the drive:
-  ```bash
-  sudo umount /mnt/agl-hdd-01
-  ```
-- Close the encrypted partition:
-  ```bash
-  sudo cryptsetup close agl-hdd-01
-  ```
-
-### Important Notes
-- Always back up important data before proceeding with formatting or encryption.
-- Ensure that your kernel supports the encryption method you choose.
-- Remember the encryption passphrase; losing it means losing access to the data on the drive.
-- This process can be automated or integrated into system services for ease of use.
-
-This guide is intended for users with a good understanding of Linux systems. If you're new to these concepts, consider seeking additional detailed guides or assistance.
