@@ -7,7 +7,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 TMP_DIR = BASE_DIR / "data"
 TMP_IMPORT_FRAME_DIR_PARENT = TMP_DIR / "tmp" / "raw_frames"

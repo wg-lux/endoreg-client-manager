@@ -38,17 +38,59 @@ def move_files(
             save = True
         )
 
+
+from endoreg_db.models.data_file.import_classes.processing_functions import (
+    extract_frames_from_videos,
+    videos_scheduled_for_ocr_preflight, perform_ocr_on_videos,
+    videos_scheduled_for_initial_prediction_preflight, perform_initial_prediction_on_videos,
+    videos_scheduled_for_prediction_import_preflight, import_predictions_for_videos,
+    delete_frames_preflight, delete_frames
+)
+
 @shared_task
 def extract_frames():
     """Extract frames from video files."""
-    for video in RawVideoFile.objects.filter(
-        state_frames_extracted=False,
-        state_frames_required=True
-    ):
-        video.extract_frames()
-        video.state_frames_extracted = True
-        video.save()
+    extract_frames_from_videos()
 
+@shared_task
+def video_ocr_preflight():
+    """OCR preflight."""
+    videos_scheduled_for_ocr_preflight()
+
+@shared_task
+def video_ocr():
+    """Perform OCR on video files."""
+    perform_ocr_on_videos()
+
+@shared_task
+def video_initial_prediction_preflight():
+    """Initial prediction preflight."""
+    videos_scheduled_for_initial_prediction_preflight()
+
+@shared_task
+def video_initial_prediction():
+    """Perform initial prediction on video files."""
+    perform_initial_prediction_on_videos()
+
+@shared_task
+def video_prediction_import_preflight():
+    """Prediction import preflight."""
+    videos_scheduled_for_prediction_import_preflight()
+
+@shared_task
+def video_prediction_import():
+    """Import predictions for video files."""
+    import_predictions_for_videos()
+
+@shared_task
+def delete_frames_preflight():
+    """Delete frames preflight."""
+    delete_frames_preflight()
+
+@shared_task
+def delete_frames():
+    """Delete frames."""
+    delete_frames()
 
 @shared_task
 def retrieve_sensitive_video_data():
@@ -59,10 +101,10 @@ def retrieve_sensitive_video_data():
     ):
         video.update_text_metadata()
 
-@shared_task
-def create_video_meta():
-    """Create Video Meta"""
-    for video in RawVideoFile.objects.filter(
-        video_meta__isnull=True
-    ):
-        video.update_video_meta()
+# @shared_task
+# def create_video_meta():
+#     """Create Video Meta"""
+#     for video in RawVideoFile.objects.filter(
+#         video_meta__isnull=True
+#     ):
+#         video.update_video_meta()
