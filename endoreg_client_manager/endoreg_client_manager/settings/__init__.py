@@ -1,11 +1,6 @@
 import os
 from .default_paths import *
-#(
-#     BASE_DIR,
-#     DROPOFF_DIR,
-#     PSEUDO_DIR,
-#     PROCESSED_DIR,
-# )
+from .multilabel_ai import *
 from .static import *
 from .internationalization import LANGUAGE_CODE, TIME_ZONE, USE_I18N, USE_TZ
 from .celery import *

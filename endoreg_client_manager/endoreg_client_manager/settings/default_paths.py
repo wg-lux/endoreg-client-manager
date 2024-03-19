@@ -14,6 +14,9 @@ TMP_IMPORT_FRAME_DIR_PARENT = TMP_DIR / "tmp" / "raw_frames"
 if not TMP_IMPORT_FRAME_DIR_PARENT.exists():
     TMP_IMPORT_FRAME_DIR_PARENT.mkdir(parents=True, exist_ok=True)
 
+PREDICTION_DIR_PARENT = TMP_DIR / "predictions"
+if not PREDICTION_DIR_PARENT.exists():
+    PREDICTION_DIR_PARENT.mkdir(parents=True, exist_ok=True)
 
 import json
 # Read hostname from /etc/endoreg-client-config/hostname

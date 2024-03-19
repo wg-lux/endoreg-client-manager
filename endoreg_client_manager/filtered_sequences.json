@@ -1,0 +1,116 @@
+{
+    "appendix_start": [
+        4001,
+        4923
+    ],
+    "appendix_stop": [
+        4028,
+        5008
+    ],
+    "blood_start": [],
+    "blood_stop": [],
+    "diverticule_start": [],
+    "diverticule_stop": [],
+    "grasper_start": [
+        8383,
+        8457,
+        8930,
+        9871
+    ],
+    "grasper_stop": [
+        8424,
+        8530,
+        8963,
+        10041
+    ],
+    "ileocaecalvalve_start": [],
+    "ileocaecalvalve_stop": [],
+    "ileum_start": [
+        3895,
+        3948,
+        4329,
+        4469
+    ],
+    "ileum_stop": [
+        3936,
+        4165,
+        4406,
+        4629
+    ],
+    "low_quality_start": [
+        481,
+        1147,
+        1273,
+        1826,
+        2325,
+        2780,
+        3265,
+        3421,
+        4794,
+        5117,
+        5404,
+        5974,
+        6049,
+        7263,
+        7366,
+        8052,
+        8147,
+        8618,
+        8687,
+        8883,
+        9000
+    ],
+    "low_quality_stop": [
+        701,
+        1198,
+        1581,
+        1856,
+        2473,
+        2823,
+        3324,
+        3747,
+        4822,
+        5166,
+        5483,
+        6033,
+        6158,
+        7333,
+        7448,
+        8115,
+        8192,
+        8671,
+        8718,
+        8974,
+        9132
+    ],
+    "nbi_start": [
+        11060
+    ],
+    "nbi_stop": [
+        12148
+    ],
+    "needle_start": [],
+    "needle_stop": [],
+    "outside_start": [
+        0,
+        711,
+        12145
+    ],
+    "outside_stop": [
+        463,
+        863,
+        12344
+    ],
+    "polyp_start": [
+        11070
+    ],
+    "polyp_stop": [
+        12044
+    ],
+    "snare_start": [],
+    "snare_stop": [],
+    "water_jet_start": [],
+    "water_jet_stop": [],
+    "wound_start": [],
+    "wound_stop": []
+}

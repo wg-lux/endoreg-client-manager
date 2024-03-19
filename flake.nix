@@ -7,29 +7,52 @@
       url = "github:nix-community/poetry2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    cachix = {
+      url = "github:cachix/cachix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, poetry2nix }:
+  outputs = { self, nixpkgs, flake-utils, poetry2nix, cachix, ... }:
     let
         system = "x86_64-linux";
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          config.cudaSupport = true;
+        };
         _poetry2nix = poetry2nix.lib.mkPoetry2Nix { inherit pkgs; };
+        nvidiaCache = cachix.lib.mkCachixCache {
+          inherit (pkgs) lib;
+          name = "nvidia";
+          publicKey = "nvidia.cachix.org-1:dSyZxI8geDCJrwgvBfPH3zHMC+PO6y/BT7O6zLBOv0w=";
+          secretKey = null;  # not needed for pulling from the cache
+        };
 
     in
         {
           # Call with nix develop
           devShell."${system}" = pkgs.mkShell {
-            buildInputs = [ 
-              pkgs.poetry
-              pkgs.python3Packages.numpy
-              pkgs.python3Packages.opencv4
-              pkgs.stdenv
-              pkgs.tesseract
-              # pkgs.stdenv.cc.cc.lib
-              pkgs.pam
+            buildInputs = with pkgs; [ 
+              poetry
+              opencv
 
-              # Make venv (not very nixy but easy workaround to use current non-nix-packaged python module)
-              pkgs.python3Packages.venvShellHook
+              # CUDA
+              cudatoolkit linuxPackages.nvidia_x11
+              cudaPackages.cudnn
+              libGLU libGL
+              xorg.libXi xorg.libXmu freeglut
+              xorg.libXext xorg.libX11 xorg.libXv xorg.libXrandr zlib 
+              ncurses5 stdenv.cc binutils
+
+              python311
+              python311Packages.venvShellHook
+              python311Packages.numpy
+              python311Packages.torchvision-bin
+              python311Packages.torchaudio-bin
+              tesseract
+              pam
+
             ];
 
             # Define Environment Variables
@@ -38,20 +61,27 @@
             # Define Python venv
             venvDir = ".venv";
             postShellHook = ''
+              export CUDA_PATH=${pkgs.cudatoolkit}
+              # export LD_LIBRARY_PATH=${pkgs.linuxPackages.nvidia_x11}/lib:${pkgs.ncurses5}/lib
+              export EXTRA_LDFLAGS="-L/lib -L${pkgs.linuxPackages.nvidia_x11}/lib"
+              export EXTRA_CCFLAGS="-I/usr/include"
               mkdir -p data
 
-              pip install --upgrade pip
+              python -m pip install --upgrade pip
               poetry update
 
               # install dev dependiencies
-              pip install -e /home/agl-admin/dev/agl-frame-extractor
-              pip install -e /home/agl-admin/dev/endoreg-db
+              # python -m pip install -e /home/agl-admin/dev/agl-frame-extractor
+              # python -m pip install -e /home/agl-admin/dev/endoreg-db
+              # pip install -e /home/agl-admin/dev/agl-predict-endo-frame
               
               export DJANGO_SECRET_KEY=$(cat .env/secret)
             '';
           };
 
-
-        # });
+        nixConfig = {
+          binary-caches = [nvidiaCache.binaryCachePublicUrl];
+          binary-cache-public-keys = [nvidiaCache.publicKey];
         };
+      };
 }

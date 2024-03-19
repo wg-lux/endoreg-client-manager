@@ -27,6 +27,13 @@ python-dotenv = "^1.0.1"
 numpy = "^1.26.4"
 opencv-python = "^4.9.0.80"
 pillow = "^10.2.0"
+torchvision = "^0.17.1"
+torchaudio = "^2.2.1"
+pytorch-lightning = "^2.2.1"
+torch = "^2.2.1"
+agl-frame-extractor = "^0.2.0"
+endoreg-db = "^0.3.0"
+agl-predict-endo-frame = "^0.2.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
