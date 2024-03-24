@@ -18,23 +18,59 @@ logger = get_task_logger(__name__)
 # import FRAME_DIR_PARENT from settings
 from django.conf import settings
 
+DROPOFF_DIR_VIDEO = settings.DROPOFF_DIR_VIDEO
+DROPOFF_DIR_EXAMINATION = settings.DROPOFF_DIR_EXAMINATION
+DROPOFF_DIR_HISTOLOGY = settings.DROPOFF_DIR_HISTOLOGY
+
+PSEUDO_DIR_RAW_VIDEO = settings.PSEUDO_DIR_RAW_VIDEO
+PSEUDO_DIR_RAW_PDF = settings.PSEUDO_DIR_RAW_PDF
+# PSEUDO_DIR_RAW_EXAMINATION = settings.PSEUDO_DIR_RAW_EXAMINATION
+# PSEUDO_DIR_RAW_HISTOLOGY = settings.PSEUDO_DIR_RAW_HISTOLOGY
+
 FRAME_DIR_PARENT = settings.TMP_IMPORT_FRAME_DIR_PARENT
-RAW_VIDEO_DIR_PARENT = settings.RAW_VIDEO_DIR_PARENT
 PREDICTION_DIR_PARENT = settings.PREDICTION_DIR_PARENT
 
 MULTILABEL_MODEL_PATH = settings.MULTILABEL_MODEL_PATH
 PREDICTION_SMOOTHING_WINDOW_SIZE_S = settings.PREDICTION_SMOOTHING_WINDOW_SIZE_S
 PREDICTION_MIN_SEQUENCE_LENGTH_S = settings.PREDICTION_MIN_SEQUENCE_LENGTH_S
 
+from endoreg_db.models import RawPdfFile
+@shared_task()
+def move_examination_files(
+    center_name = "university_hospital_wuerzburg",
+    pdf_type_name = "ukw-endoscopy-examination-report-generic", #must match available pdf_file from endoreg_db.models.data_file.metadata.pdf_meta.PdfType
+    source_directory = DROPOFF_DIR_EXAMINATION,
+    destination_directory = PSEUDO_DIR_RAW_PDF
+):
+    """Move files from one directory to another."""
+    for file in os.listdir(source_directory):
+        source_path = Path(os.path.join(source_directory, file))
 
+        raw_pdf_file = RawPdfFile.create_from_file(
+            file_path = source_path,
+            center_name = center_name,
+            pdf_type_name = pdf_type_name,
+            destination_dir = destination_directory,
+            save = True
+        )
+
+from endoreg_db.models.data_file.import_classes.processing_functions import (
+    process_examination_reports
+)
+
+@shared_task
+def report_examination_processing():
+    """Process examination reports."""
+    process_examination_reports()
 
 @shared_task()
-def move_files(
+def move_video_files(
     center_name = "university_hospital_wuerzburg",
     processor_name = "olympus_cv_1500",
-    source_directory = "/mnt/hdd-sensitive/DropOff/data",
-    destination_directory = "/mnt/hdd-sensitive/Pseudo/data"
-    ):
+    source_directory = DROPOFF_DIR_VIDEO,
+    destination_directory = PSEUDO_DIR_RAW_VIDEO,
+    frame_directory = FRAME_DIR_PARENT
+):
     """Move files from one directory to another."""
     for filename in os.listdir(source_directory):
         source_path = Path(os.path.join(source_directory, filename))
@@ -43,10 +79,11 @@ def move_files(
             file_path = source_path,
             center_name = center_name,
             processor_name = processor_name,
-            frame_dir_parent = FRAME_DIR_PARENT,
-            video_dir_parent = RAW_VIDEO_DIR_PARENT,
+            frame_dir_parent = frame_directory,
+            video_dir = destination_directory,
             save = True
         )
+
 
 
 from endoreg_db.models.data_file.import_classes.processing_functions import (

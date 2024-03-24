@@ -13,7 +13,15 @@ from .database import (
     DATABASE_ROUTERS
 )
 
-ENDOREG_CENTER_ID = 1
+from .report_reader_config import (
+    PDF_TYPE_EXAMINATION,
+    PDF_TYPE_HISTOLOGY
+)
+
+from .center_info import (
+    ENDOREG_CENTER_NAME,
+    ENDOREG_CENTER_ID
+)
 
 
 load_dotenv()

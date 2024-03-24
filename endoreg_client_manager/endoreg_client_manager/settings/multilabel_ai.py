@@ -2,8 +2,9 @@ import os
 from pathlib import Path
 import json
 from warnings import warn
+from .user_settings import MULTILABEL_AI_CONFIG_PATH
 
-multilabel_ai_config_path = Path("/etc/endoreg-client-config/multilabel-ai-config.json")
+multilabel_ai_config_path = MULTILABEL_AI_CONFIG_PATH
 if multilabel_ai_config_path.exists():
     with open(multilabel_ai_config_path) as f:
         multilabel_ai_config = json.load(f)

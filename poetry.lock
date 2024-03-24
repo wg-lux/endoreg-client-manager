@@ -185,13 +185,13 @@ vine = ">=5.0.0,<6.0.0"
 
 [[package]]
 name = "asgiref"
-version = "3.7.2"
+version = "3.8.1"
 description = "ASGI specs, helper code, and adapters"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "asgiref-3.7.2-py3-none-any.whl", hash = "sha256:89b2ef2247e3b562a16eef663bc0e2e703ec6468e2fa8a5cd61cd449786d4f6e"},
-    {file = "asgiref-3.7.2.tar.gz", hash = "sha256:9e0ce3aa93a819ba5b45120216b23878cf6e8525eb3848653452b4192b92afed"},
+    {file = "asgiref-3.8.1-py3-none-any.whl", hash = "sha256:3e1e3ecc849832fe52ccf2cb6686b7a55f82bb1d6aee72a58826471390335e47"},
+    {file = "asgiref-3.8.1.tar.gz", hash = "sha256:c343bd80a0bec947a9860adb4c432ffa7db769836c64238fc34bdc3fec84d590"},
 ]
 
 [package.extras]
@@ -717,13 +717,13 @@ Django = ">=3.2,<6.0"
 
 [[package]]
 name = "djangorestframework"
-version = "3.15.0"
+version = "3.15.1"
 description = "Web APIs for Django, made easy."
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "djangorestframework-3.15.0-py3-none-any.whl", hash = "sha256:5fa616048a7ec287fdaab3148aa5151efb73f7f8be1e23a9d18484e61e672695"},
-    {file = "djangorestframework-3.15.0.tar.gz", hash = "sha256:3f4a263012e1b263bf49a4907eb4cfe14de840a09b1ba64596d01a9c54835919"},
+    {file = "djangorestframework-3.15.1-py3-none-any.whl", hash = "sha256:3ccc0475bce968608cf30d07fb17d8e52d1d7fc8bfe779c905463200750cbca6"},
+    {file = "djangorestframework-3.15.1.tar.gz", hash = "sha256:f88fad74183dfc7144b2756d0d2ac716ea5b4c7c9840995ac3bfd8ec034333c1"},
 ]
 
 [package.dependencies]
@@ -765,13 +765,13 @@ files = [
 
 [[package]]
 name = "endoreg-db"
-version = "0.3.0"
+version = "0.3.1"
 description = "EndoReg Db Django App"
 optional = false
 python-versions = ">=3.11,<4.0"
 files = [
-    {file = "endoreg_db-0.3.0-py3-none-any.whl", hash = "sha256:7a15964d9fa0690d499be4c89ba21661a4b7dc6a17d266dcc469da36b3478cf8"},
-    {file = "endoreg_db-0.3.0.tar.gz", hash = "sha256:ef5854ddf5145b19ac87ae30281bca57026c09ad7ecb2052e44ac9b4ed85d8d2"},
+    {file = "endoreg_db-0.3.1-py3-none-any.whl", hash = "sha256:9d2802d600181712333ef18144d47eb4820894f8f7e9196acec848dac4367b33"},
+    {file = "endoreg_db-0.3.1.tar.gz", hash = "sha256:8a8dc1f3c720edf7fd0e57bd4506d36e0e5cad41c03b3f55fa0094f640f89dc2"},
 ]
 
 [package.dependencies]
@@ -2654,13 +2654,13 @@ files = [
 
 [[package]]
 name = "threadpoolctl"
-version = "3.3.0"
+version = "3.4.0"
 description = "threadpoolctl"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "threadpoolctl-3.3.0-py3-none-any.whl", hash = "sha256:6155be1f4a39f31a18ea70f94a77e0ccd57dced08122ea61109e7da89883781e"},
-    {file = "threadpoolctl-3.3.0.tar.gz", hash = "sha256:5dac632b4fa2d43f42130267929af3ba01399ef4bd1882918e92dbc30365d30c"},
+    {file = "threadpoolctl-3.4.0-py3-none-any.whl", hash = "sha256:8f4c689a65b23e5ed825c8436a92b818aac005e0f3715f6a1664d7c7ee29d262"},
+    {file = "threadpoolctl-3.4.0.tar.gz", hash = "sha256:f11b491a03661d6dd7ef692dd422ab34185d982466c49c8f98c8f716b5c93196"},
 ]
 
 [[package]]

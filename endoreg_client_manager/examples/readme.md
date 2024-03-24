@@ -1,0 +1,1 @@
+run django shell and copy past these scripts, useful during development @trial and error

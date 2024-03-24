@@ -3,7 +3,9 @@
 from datetime import timedelta
 from celery.schedules import crontab
 from ..default_paths import ( 
-    DROPOFF_DIR, 
+    DROPOFF_DIR_VIDEO, 
+    DROPOFF_DIR_EXAMINATION,
+    DROPOFF_DIR_HISTOLOGY,
     PSEUDO_DIR_IMPORT
 )
 
@@ -14,7 +16,7 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': timedelta(minutes=360),  # change to `crontab(minute=0, hour=0)` to run daily at midnight
         # args: json.dumps([asd,asd,asd])
         "kwargs": {
-            "source_directory": DROPOFF_DIR.resolve().as_posix(),
+            "source_directory": DROPOFF_DIR_VIDEO.resolve().as_posix(),
             "destination_directory": PSEUDO_DIR_IMPORT.resolve().as_posix(),   
         }
     },
