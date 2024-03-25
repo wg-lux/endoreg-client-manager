@@ -1,60 +1,15 @@
-# Celery Beat Schedule
-
 from datetime import timedelta
-from celery.schedules import crontab
-from ..default_paths import ( 
-    DROPOFF_DIR_VIDEO, 
-    DROPOFF_DIR_EXAMINATION,
-    DROPOFF_DIR_HISTOLOGY,
-    PSEUDO_DIR_IMPORT
-)
+from .move_files import SCHEDULE as move_files_schedule
+from .video_process import SCHEDULE as video_process_schedule
+from .pdf_process import SCHEDULE as pdf_process_schedule
 
-# Add at the end of the file
 CELERY_BEAT_SCHEDULE = {
-    'import_from_dropoff': {
-        'task': 'data_collector.tasks.move_files',
-        'schedule': timedelta(minutes=360),  # change to `crontab(minute=0, hour=0)` to run daily at midnight
-        # args: json.dumps([asd,asd,asd])
-        "kwargs": {
-            "source_directory": DROPOFF_DIR_VIDEO.resolve().as_posix(),
-            "destination_directory": PSEUDO_DIR_IMPORT.resolve().as_posix(),   
-        }
-    },
-
-    "extract_frames": {
-        "task": "data_collector.tasks.extract_frames",
-        "schedule": timedelta(minutes=300)
-    },
-
-    # # OCR
-    "video_ocr_preflight": {
-        "task": "data_collector.tasks.video_ocr_preflight",
-        "schedule": timedelta(minutes=5)
-    },
-
-    "video_ocr": {
-        "task": "data_collector.tasks.video_ocr",
-        "schedule": timedelta(minutes=280)
-    },
-
-    # # Initial Prediction
-    "video_initial_prediction_preflight": {
-        "task": "data_collector.tasks.video_initial_prediction_preflight",
-        "schedule": timedelta(minutes=5)
-    },
-
-    "video_initial_prediction": {
-        "task": "data_collector.tasks.video_initial_prediction",
-        "schedule": timedelta(minutes=400)
-    },
+    # 'example_task': {
+    #     'task': 'data_collector.tasks.example_task',
+    #     'schedule': timedelta(minutes=1),  # change to `crontab(minute=0, hour=0)` to run daily at midnight
+    # }
 }
 
-    
-    # "retrieve_sensitive_video_data": {
-    #     "task": "data_collector.tasks.retrieve_sensitive_video_data",
-    #     "schedule": timedelta(minutes=5)
-    # },
-    # "probe_video_files": {
-    #     "task": "data_collector.tasks.probe_video_files",
-    #     "schedule": timedelta(minutes=5)
-    # }
+CELERY_BEAT_SCHEDULE.update(move_files_schedule)
+CELERY_BEAT_SCHEDULE.update(video_process_schedule)
+CELERY_BEAT_SCHEDULE.update(pdf_process_schedule)

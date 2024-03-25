@@ -23,6 +23,11 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
         },
+        'celery': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'celery.log',
+        },
     },
     'loggers': {
         'django': {
@@ -32,6 +37,11 @@ LOGGING = {
         },
         'filepaths': {
             'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'celery': {
+            'handlers': ['celery'],
             'level': 'INFO',
             'propagate': True,
         },

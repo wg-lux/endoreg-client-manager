@@ -8,6 +8,9 @@ from .logging_conf import LOGGING
 from dotenv import load_dotenv
 from pathlib import Path
 from .utils import env_var_to_list, create_glob_expression
+
+from .caches import CACHES
+
 from .database import (
     DATABASES,
     DATABASE_ROUTERS
@@ -20,9 +23,11 @@ from .report_reader_config import (
 
 from .center_info import (
     ENDOREG_CENTER_NAME,
-    ENDOREG_CENTER_ID
+    ENDOREG_PROCESSOR_NAME,
+    ENDOREG_CENTER_ID,
+    PDF_TYPE_EXAMINATION,
+    PDF_TYPE_HISTOLOGY
 )
-
 
 load_dotenv()
 
@@ -73,6 +78,7 @@ INSTALLED_APPS = [
     "report_processor.apps.ReportProcessorConfig",
     "data_validation.apps.DataValidationConfig",
     "video_processor.apps.VideoProcessorConfig",
+    "django_redis",
     "django_celery_beat",
     "django_celery_results",
     "celery",
