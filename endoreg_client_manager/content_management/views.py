@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from .tasks import collect_data
 import logging
 # import django settings
+from django.conf import settings
 from endoreg_client_manager.settings import (
     DROPOFF_DIR,
     PSEUDO_DIR,
@@ -57,3 +58,9 @@ def coloreg_security_concept(request):
 
 def help_page(request):
     return render(request, 'help.html')
+
+def hdd_management(request):
+    context = {
+        "partition_dict": settings.PARTITION_DICT
+    }
+    return render(request, 'data_collector/hdd_management.html', context)

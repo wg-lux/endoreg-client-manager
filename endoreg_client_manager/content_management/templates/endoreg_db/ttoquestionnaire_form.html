@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Endoscopy Questionnaire</h2>
+    <form method="post" class="form">
+        {% csrf_token %}
+        
+        <!-- Patient Information -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="patient_name" class="form-label">Identifikation des Patienten (Name)</label>
+                    <input type="text" class="form-control" id="patient_name" name="patient_name" required>
+                </div>
+    
+                <div class="mb-3">
+                    <label for="birth_date" class="form-label">Geburtsdatum</label>
+                    <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!-- Optionally use this column for additional patient information if necessary -->
+            </div>
+        </div>
+        
+        <!-- Spacer -->
+        <div class="mt-4"></div>
+        
+        <!-- Base Documentation -->
+        <h4>Basisdokumentation</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="emergency_patient" class="form-label">Notfallpatient/kürzlich untersuchter Patient (Verzicht auf Team-Time-Out möglich)</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="{{ field.id_for_label }}" name="{{ field.name }}" value="yes">
+                        <label class="form-check-label" for="{{ field.id_for_label }}">Ja</label>
+                    </div>
+                </div>
+                <!-- Repeat for other fields in Base Documentation in the first column -->
+                
+            </div>
+            <div class="col-md-6">
+                <!-- Repeat for the remaining fields in Base Documentation in the second column -->
+            </div>
+        </div>
+
+        <!-- Following sections structured in two columns as well -->
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Priorisierte Elemente</h4>
+                <!-- Priority Items fields here -->
+            </div>
+            <div class="col-md-3">
+                <h4>Patienteneigentum</h4>
+                <!-- Possessions fields here: dental_prosthesis, glasses, implants, hearing_aids-->
+                <div class="mb-3">
+                    <label for="dental_prosthesis" class="form-label">Zahnersatz</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="{{ field.id_for_label }}" name="{{ field.name }}" value="yes">
+                        <label class="form-check-label" for="{{ field.id_for_label }}">Ja</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="glasses" class="form-label">Brille</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="{{ field.id_for_label }}" name="{{ field.name }}" value="yes">
+                        <label class="form-check-label" for="{{ field.id_for_label }}">Ja</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h4>_</h4>
+                <div class="mb-3">
+                    <label for="implants" class="form-label">Implantate</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="{{ field.id_for_label }}" name="{{ field.name }}" value="yes">
+                        <label class="form-check-label" for="{{ field.id_for_label }}">Ja</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="hearing_aids" class="form-label">Hörgeräte</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="{{ field.id_for_label }}" name="{{ field.name }}" value="yes">
+                        <label class="form-check-label" for="{{ field.id_for_label }}">Ja</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Medizinische Geschichte</h4>
+                <!-- Medical History fields here -->
+            </div>
+            <div class="col-md-6">
+                <h4>Vorflug</h4>
+                <!-- Preflight fields here -->
+            </div>
+        </div>
+        
+        <!-- Notes and Postflight can span the full width or be divided as needed -->
+        <div class="row">
+            <div class="col-12">
+                <h4>Bemerkungen</h4>
+                <div class="mb-3">
+                    <label for="notes" class="form-label">Bemerkungen</label>
+                    <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <h4>Nachflug</h4>
+                <!-- Postflight fields here, if they should span full width -->
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{% endblock content %}

@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     path("", views.landing_page, name="landing_page"),
+    path("hdd-management/", views.hdd_management, name="hdd_management"),
 
     # ColoReg
     path("coloreg/security-concept/", views.coloreg_security_concept, name="coloreg_security_concept"),

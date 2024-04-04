@@ -16,11 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from endoreg_db.forms import TtoQuestionnaireCreate
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/data_collector/', include('data_collector.urls')),
     path('', include('content_management.urls')),
+    path("tto_questionnaire/", TtoQuestionnaireCreate.as_view(), name="tto_questionnaire"),
     
 ]
 

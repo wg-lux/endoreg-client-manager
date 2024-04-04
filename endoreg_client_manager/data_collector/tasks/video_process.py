@@ -42,10 +42,18 @@ def task_video_initial_prediction_preflight(self):
     """Initial prediction preflight."""
     videos_scheduled_for_initial_prediction_preflight()
 
+# get celery logger
+from celery.utils.log import get_task_logger
+import torch
+logger = get_task_logger(__name__)
+
 @shared_task(bind=True)
 @single_instance_task(lock_expire = LOCK_EXPIRE)
 def task_video_initial_prediction(self):
     """Perform initial prediction on video files."""
+
+    logger.info("CUDA Available:", torch.cuda.is_available())
+    logger.info("Device Count:", torch.cuda.device_count())
     perform_initial_prediction_on_videos(
         MULTILABEL_MODEL_PATH,
         window_size_s = PREDICTION_SMOOTHING_WINDOW_SIZE_S,

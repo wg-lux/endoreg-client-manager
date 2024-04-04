@@ -50,9 +50,9 @@ else:
     PROCESSED_PARTITION = Path("/mnt/Processed")
 
 
-assert DROPOFF_PARTITION.exists(), f"DropOff partition does not exist at {DROPOFF_PARTITION}"
-assert PSEUDO_PARTITION.exists(), f"Pseudo partition does not exist at {PSEUDO_PARTITION}"
-assert PROCESSED_PARTITION.exists(), f"Processed partition does not exist at {PROCESSED_PARTITION}"
+# assert DROPOFF_PARTITION.exists(), f"DropOff partition does not exist at {DROPOFF_PARTITION}"
+# assert PSEUDO_PARTITION.exists(), f"Pseudo partition does not exist at {PSEUDO_PARTITION}"
+# assert PROCESSED_PARTITION.exists(), f"Processed partition does not exist at {PROCESSED_PARTITION}"
 
 DROPOFF_DIR = DROPOFF_PARTITION / "data"
 if not DROPOFF_DIR.exists():
@@ -118,4 +118,20 @@ PROCESSED_DB_PATH = PROCESSED_PARTITION / "processed.db"
 if not os.access(PSEUDO_DIR, os.W_OK):
     raise PermissionError(f"Cannot write to {PSEUDO_DIR}")
 
-
+PARTITION_DICT = {
+    "DropOff": {
+        "path": DROPOFF_PARTITION,
+        "mount_service": "mountDropOffService",
+        "umount_service": "umountDropOffService",
+    },
+    "Pseudo": {
+        "path": PSEUDO_PARTITION,
+        "mount_service": "mountPseudoService",
+        "umount_service": "umountPseudoService",
+    },
+    "Processed": {
+        "path": PROCESSED_PARTITION,
+        "mount_service": "mountProcessedService",
+        "umount_service": "umountProcessedService",
+    }
+}

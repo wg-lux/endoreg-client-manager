@@ -23,6 +23,12 @@ from celery import shared_task
 from .common import single_instance_task
 import time
 from celery.utils.log import get_task_logger
+from .hdd import (
+    mount_partition, 
+    unmount_partition,
+    is_mountpoint,
+)
+
 logger = get_task_logger(__name__)
 LOCK_EXPIRE = 600 # * 60 * 24  # Lock expires in 24 h
 # Example task which waits 2 minutes while printing a message every 30 seconds

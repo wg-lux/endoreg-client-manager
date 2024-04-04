@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block content %}
+
+<!-- Partition Management Section -->
+<section class="container py-5">
+  <h2 class="mb-4">Partition Management</h2>
+  {% for partition_name, partition_info in partition_dict.items %}
+      <hr>
+      <div class="partition-management" data-partition="{{ partition_name }}">
+          <h5>{{ partition_name }} <span class="mount-status badge bg-secondary">Checking...</span></h5>
+          <button class="btn btn-primary mount-btn">Mount</button>
+          <button class="btn btn-danger unmount-btn">Unmount</button>
+      </div>
+      
+  {% endfor %}
+  <hr>
+  <button id="refresh-mount-status" class="btn btn-secondary mt-3">Refresh Mount Status</button>
+</section>
+
+
+<script>
+function refreshMountStatus() {
+  fetch('{% url 'check_mount_status' %}')
+      .then(response => response.json())
+      .then(data => {
+          for (const [partition, mounted] of Object.entries(data)) {
+              // Find the mount status element for the partition
+              const partitionElement = document.querySelector(`[data-partition="${partition}"] .mount-status`);
+              // Update the text and class based on the mount status
+              if (mounted) {
+                  partitionElement.textContent = 'Mounted';
+                  partitionElement.classList.remove('bg-secondary');
+                  partitionElement.classList.add('bg-success');
+              } else {
+                  partitionElement.textContent = 'Not Mounted';
+                  partitionElement.classList.remove('bg-success');
+                  partitionElement.classList.add('bg-secondary');
+              }
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          // Optionally, handle the error state in your UI
+      });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Initial refresh of mount status on page load
+  refreshMountStatus();
+
+  document.querySelectorAll('.mount-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+          const partitionName = this.closest('.partition-management').getAttribute('data-partition');
+          fetch(`/api/data_collector/mount/${partitionName}/`)
+              .then(response => response.json())
+              .then(data => {
+                  console.log(data.status);
+                  // Wait for 3 seconds before refreshing the mount status
+                  setTimeout(refreshMountStatus, 3000);
+              });
+      });
+  });
+
+  document.querySelectorAll('.unmount-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+          const partitionName = this.closest('.partition-management').getAttribute('data-partition');
+          fetch(`/api/data_collector/unmount/${partitionName}/`)
+              .then(response => response.json())
+              .then(data => {
+                  console.log(data.status);
+                  // Wait for 3 seconds before refreshing the mount status
+                  setTimeout(refreshMountStatus, 1000);
+              });
+      });
+  });
+
+  // Bind the refreshMountStatus function to the "Refresh" button
+  document.getElementById('refresh-mount-status').addEventListener('click', refreshMountStatus);
+});
+</script>
+
+
+{% endblock content %}
