@@ -3,17 +3,17 @@
   inputs = {
     # flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    poetry2nix = {
-      url = "github:nix-community/poetry2nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # poetry2nix = {
+    #   url = "github:nix-community/poetry2nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     cachix = {
       url = "github:cachix/cachix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, poetry2nix, cachix, ... }:
+  outputs = { self, nixpkgs, flake-utils, cachix, ... }: #poetry2nix
     let
         system = "x86_64-linux";
         pkgs = import nixpkgs {
@@ -21,7 +21,7 @@
           config.allowUnfree = true;
           config.cudaSupport = true;
         };
-        _poetry2nix = poetry2nix.lib.mkPoetry2Nix { inherit pkgs; };
+        # _poetry2nix = poetry2nix.lib.mkPoetry2Nix { inherit pkgs; };
         nvidiaCache = cachix.lib.mkCachixCache {
           inherit (pkgs) lib;
           name = "nvidia";
@@ -37,13 +37,15 @@
               poetry
               opencv
               tesseract
+              autoAddDriverRunpath
 
               # CUDA
               # cudatoolkit
-              cudaPackages.cudnn
-              cudaPackages.cudatoolkit 
-              linuxPackages.nvidia_x11
               # cudaPackages.cudnn
+              cudaPackages.cudatoolkit 
+              # linuxPackages.nvidia_x11
+              # cudaPackages.cudnn
+
               libGLU libGL
               glibc
               xorg.libXi xorg.libXmu freeglut
@@ -69,8 +71,7 @@
             venvDir = ".venv";
             postShellHook = ''
               export CUDA_PATH=${pkgs.cudatoolkit}
-              # export LD_LIBRARY_PATH=${pkgs.linuxPackages.nvidia_x11}/lib:${pkgs.ncurses5}/lib
-              # LD_LIBRARY_PATH = "${pkgs.glibc}/lib:${pkgs.stdenv.cc.cc.lib}/lib";
+              export LD_LIBRARY_PATH=${pkgs.linuxPackages.nvidia_x11}/lib
               export EXTRA_LDFLAGS="-L/lib -L${pkgs.linuxPackages.nvidia_x11}/lib"
               export EXTRA_CCFLAGS="-I/usr/include"
               mkdir -p data
