@@ -1,3 +1,4 @@
+
 def find_files(directory, patterns):
     files = []
     for pattern in patterns:
