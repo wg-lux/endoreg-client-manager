@@ -18,6 +18,8 @@ from endoreg_db.models.data_file.import_classes.processing_functions import (
 
 from .common import single_instance_task, LOCK_EXPIRE
 
+#various tasks to process video files
+
 @shared_task(bind=True)
 @single_instance_task(lock_expire = LOCK_EXPIRE)
 def task_extract_frames(self):
