@@ -8,7 +8,7 @@ from .logging_conf import LOGGING
 from dotenv import load_dotenv
 from pathlib import Path
 from .utils import env_var_to_list, create_glob_expression
-
+from .celery_schedule import CELERY_BEAT_SCHEDULE
 from .caches import CACHES
 
 from .database import (
@@ -146,4 +146,3 @@ AUTH_PASSWORD_VALIDATORS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-from .celery_schedule import CELERY_BEAT_SCHEDULE
