@@ -5,7 +5,9 @@ from pathlib import Path
 import shutil
 import warnings
 from .utils import find_files
+import logging
 
+logger = logging.getLogger(__name__)
 
 # @shared_task
 def collect_data(dropoff_dir, pseudo_dir, filter_expression="*"):
@@ -27,4 +29,8 @@ def collect_data(dropoff_dir, pseudo_dir, filter_expression="*"):
 
     # move each file from the DROPOFF directory to the PSEUDO directory using shutil
     for file in dropoff_files:
-        shutil.move(file, pseudo_dir / file.name)
+        try:
+            shutil.move(file, pseudo_dir / file.name)
+            logger.info(f"Moved {file} to {pseudo_dir / file.name}")
+        except (IOError, shutil.Error) as e:
+            logger.error(f"Failed to move {file} to {pseudo_dir / file.name}: {e}")
