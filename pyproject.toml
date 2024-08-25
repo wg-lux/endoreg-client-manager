@@ -27,9 +27,9 @@ python-dotenv = "^1.0.1"
 numpy = "^1.26.4"
 opencv-python = "^4.9.0.80"
 pillow = "^10.2.0"
-agl-frame-extractor = "^0.2.0"
-# endoreg-db = "^0.3.4" included in agl-predict-endo-frame
-agl-predict-endo-frame = "^0.2.1"
+# endoreg-db = "^0.3.9"
+agl-frame-extractor = "^0.2"
+agl-predict-endo-frame = "^0.2"
 django-redis = "^5.4.0"
 
 [tool.poetry.group.dev.dependencies]

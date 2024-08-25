@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'colorfield',  # required for django-admin-interface
 
     "content_management.apps.ContentManagementConfig",
+    "agl_monitor_app.apps.AglMonitorAppConfig",
     "case_merger.apps.CaseMergerConfig",
     "data_collector.apps.DataCollectorConfig",
     "report_processor.apps.ReportProcessorConfig",
