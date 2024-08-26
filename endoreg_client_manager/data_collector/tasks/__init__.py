@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from .video_move import task_move_video_files
 from .pdf_examination_move import task_move_examination_files
 from .pdf_histology_move import task_move_histology_files
+from .pdf_move import task_move_pdf_files
 
 # process files
 from .video_process import (
