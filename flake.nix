@@ -39,6 +39,9 @@
               tesseract
               autoAddDriverRunpath
 
+              ffmpeg_7-headless # oder ffmpeg_7 oder ffmpeg_4 ....
+
+
               # CUDA
               # cudatoolkit
               # cudaPackages.cudnn
@@ -76,9 +79,7 @@
               export LD_LIBRARY_PATH=${pkgs.linuxPackages.nvidia_x11}/lib
               export EXTRA_LDFLAGS="-L/lib -L${pkgs.linuxPackages.nvidia_x11}/lib"
               export EXTRA_CCFLAGS="-I/usr/include"
-              
-              python -m pip install --upgrade pip
-              poetry update
+
 
             '';
           };
