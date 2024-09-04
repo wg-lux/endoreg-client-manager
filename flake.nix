@@ -2,7 +2,7 @@
   description = "Application packaged using poetry2nix";
   inputs = {
     # flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     # poetry2nix = {
     #   url = "github:nix-community/poetry2nix";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -39,6 +39,9 @@
               tesseract
               autoAddDriverRunpath
 
+              ffmpeg_7-headless # oder ffmpeg_7 oder ffmpeg_4 ....
+
+
               # CUDA
               # cudatoolkit
               # cudaPackages.cudnn
@@ -51,8 +54,10 @@
               xorg.libXi xorg.libXmu freeglut
               xorg.libXext xorg.libX11 xorg.libXv xorg.libXrandr zlib 
               ncurses5 stdenv.cc binutils
+              gcc
 
               python311
+	      python311Packages.dulwich
               python311Packages.pandas
               python311Packages.pytesseract
               python311Packages.venvShellHook
@@ -74,17 +79,8 @@
               export LD_LIBRARY_PATH=${pkgs.linuxPackages.nvidia_x11}/lib
               export EXTRA_LDFLAGS="-L/lib -L${pkgs.linuxPackages.nvidia_x11}/lib"
               export EXTRA_CCFLAGS="-I/usr/include"
-              mkdir -p data
 
-              python -m pip install --upgrade pip
-              poetry update
 
-              # install dev dependiencies
-              # python -m pip install -e /home/agl-admin/dev/agl-frame-extractor
-              # python -m pip install -e /home/agl-admin/dev/endoreg-db
-              # pip install -e /home/agl-admin/dev/agl-predict-endo-frame
-              
-              export DJANGO_SECRET_KEY=$(cat .env/secret)
             '';
           };
 

@@ -2,6 +2,7 @@ from datetime import timedelta
 from .move_files import SCHEDULE as move_files_schedule
 from .video_process import SCHEDULE as video_process_schedule
 from .pdf_process import SCHEDULE as pdf_process_schedule
+from .logging import SCHEDULE as logging_schedule
 
 CELERY_BEAT_SCHEDULE = {
     # 'example_task': {
@@ -11,5 +12,6 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 CELERY_BEAT_SCHEDULE.update(move_files_schedule)
+CELERY_BEAT_SCHEDULE.update(logging_schedule)
 CELERY_BEAT_SCHEDULE.update(video_process_schedule)
 CELERY_BEAT_SCHEDULE.update(pdf_process_schedule)
