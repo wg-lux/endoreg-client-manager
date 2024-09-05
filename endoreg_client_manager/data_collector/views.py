@@ -5,6 +5,8 @@ from django.urls import reverse
 from .tasks import mount_partition, unmount_partition, is_mountpoint
 from django.http import JsonResponse
 from django.conf import settings
+from rest_framework.views import APIView
+from .serializers import AnonymizedFileSerializer
 
 def mount_partition_view(request, partition_name):
     mount_partition.delay(partition_name)
@@ -22,3 +24,13 @@ def check_mount_status(request):
         mounted = is_mountpoint.delay(partition_info['path'].resolve().as_posix()).get(timeout=10)
         mount_status[partition_name] = mounted
     return JsonResponse(mount_status)
+
+class SaveData(APIView):
+    def post(self, request):
+        # Save data to the database
+        # permission_classes = [IsAuthenticated]
+        serializer_class = AnonymizedFileSerializer
+        AnonymizedFileSerializer(data=request.data)
+        return JsonResponse({"status": "Data saved successfully"})
+    
+    
