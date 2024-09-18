@@ -6,7 +6,7 @@ from .tasks import mount_partition, unmount_partition, is_mountpoint
 from django.http import JsonResponse
 from django.conf import settings
 from rest_framework.views import APIView
-from .serializers import AnonymizedFileSerializer, AnonymousImageAnnotationSerializer, RawFileSerializer
+from .serializers import AnonymizedFileSerializer, AnonymousImageAnnotationSerializer, RawFileSerializer, ValidateAndSaveSerializer
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated  # Optional
 from endoreg_db.models import AnonymizedFile, AnonymousImageAnnotation
@@ -28,6 +28,79 @@ def check_mount_status(request):
         except Exception as e:
             mount_status[partition_name] = str(e)
     return JsonResponse(mount_status)
+
+# data_collector/views.py
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+import logging
+
+logger = logging.getLogger(__name__)
+
+class ValidateAndSaveView(APIView):
+    # Uncomment and adjust permissions as needed
+    # permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        serializer = ValidateAndSaveSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.validated_data
+            try:
+                # Save AnonymizedFile
+                anonymized_file = AnonymizedFile.objects.create(
+                    image_name=data['image_name'],
+                    original_image_url=data.get('original_image_url', ''),
+                    polyp_count=data['polyp_count'],
+                    comments=data.get('comments', ''),
+                    name_image_url=data['name_image_url']
+                )
+
+                # Save AnonymousImageAnnotation and related Name entries
+                for gender_par in data.get('gender', []):
+                    name = gender_par.get('name', 'Unknown')
+                    gender = gender_par.get('gender', 'Unknown')
+                    x = gender_par.get('x', 0)
+                    y = gender_par.get('y', 0)
+                    image_url = gender_par.get('image_url', '')
+                    box_coordinates = gender_par.get('box_coordinates', '')
+
+                    # Assuming 'label' is related to the annotation
+                    # Adjust according to your actual model relationships
+                    label_name = gender_par.get('label_name', 'Default Label')
+                    label, created = AnonymizedImageLabel.objects.get_or_create(name=label_name)
+
+                    annotation = AnonymousImageAnnotation.objects.create(
+                        label=label,
+                        image_name=data['image_name'],
+                        original_image_url=data.get('original_image_url', ''),
+                        polyp_count=data['polyp_count'],
+                        comments=data.get('comments', ''),
+                        gender=gender,
+                        name_image_url=image_url,
+                        processed=True
+                    )
+
+                    # Save Name entries related to the annotation
+                    Name.objects.create(
+                        annotation=annotation,
+                        name=name,
+                        gender=gender,
+                        x=x,
+                        y=y,
+                        name_image_url=image_url,
+                        box_coordinates=box_coordinates
+                    )
+
+                logger.info(f"Data saved successfully for image: {data['image_name']}")
+                return Response({"message": "Data saved successfully"}, status=status.HTTP_201_CREATED)
+
+            except Exception as e:
+                logger.error(f"Error saving data: {e}")
+                return Response({"error": "Failed to save data"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            logger.warning(f"Validation failed: {serializer.errors}")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class SaveData(APIView):
     #permission_classes = [IsAuthenticated]  # Optional

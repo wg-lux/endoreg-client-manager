@@ -14,4 +14,5 @@ urlpatterns = [
     path('api/', include('rest_framework.urls', namespace='rest_framework')),
     path("api/anonymized_file/", views.AnonymizedFileListCreate.as_view(), name="anonymized_file_list_create"),
     path("api/annotations/", views.AnnotationListCreate.as_view(), name="annotation_list_create"),
+    path('validate-and-save/', views.ValidateAndSaveView.as_view(), name='validate_and_save'),
 ]

@@ -9,6 +9,14 @@ class RawFileSerializer(serializers.ModelSerializer):
         model = RawFile
         fields = '__all__'  # Consider listing fields explicitly for better control
 
+class ValidateAndSaveSerializer(serializers.Serializer):
+    image_name = serializers.CharField(max_length=255)
+    original_image_url = serializers.URLField(required=False, allow_blank=True)
+    polyp_count = serializers.IntegerField()
+    comments = serializers.CharField(max_length=500, allow_blank=True)
+    gender = serializers.ListField(child=serializers.DictField())
+    name_image_url = serializers.CharField(max_length=255)
+
 class AnonymizedFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = AnonymizedFile

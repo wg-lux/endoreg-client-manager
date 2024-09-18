@@ -39,8 +39,8 @@ def task_anonymize_files(self, image_path):
 
         # Extract required data from the response
         processed_files = response_data.get('processed_files', [])
-        gender_pars = response_data.get('gender_pars', [])
-        original_image_path = response_data.get('original_image_path', [''])[0]
+        gender_pars = response_data.get('gender', [])  # Changed from 'gender_pars' to 'gender'
+        original_image_path = response_data.get('original_image_url', '')
 
         # Save the results to the database
         try:
@@ -75,4 +75,4 @@ def task_anonymize_files(self, image_path):
         except Exception as e:
             raise Exception(f"Failed to save annotation and names: {str(e)}")
     except Exception as exc:
-    self.retry(exc=exc)
+        self.retry(exc=exc)
