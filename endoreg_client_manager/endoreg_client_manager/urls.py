@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from endoreg_db.forms import TtoQuestionnaireCreate
-from .views import SaveDataView, AnonymizationRequestView, HandleAnnotationView, ValidateAndSaveView
+from .views import SaveDataView, ValidateAndSaveView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,8 +26,8 @@ urlpatterns = [
     path("tto_questionnaire/", TtoQuestionnaireCreate.as_view(), name="tto_questionnaire"),
     path("save-data/", SaveDataView.as_view(), name="save_data"),
     path("validate-and-save/", ValidateAndSaveView.as_view(), name="validate_and_save"),
-    path("anonymization-request/", AnonymizationRequestView.as_view(), name="anonymization_request"),
-    path("handle-annotation/", HandleAnnotationView.as_view(), name="handle_annotation"),
+    #path("anonymization-request/", AnonymizationRequestView.as_view(), name="anonymization_request"),
+    #path("handle-annotation/", HandleAnnotationView.as_view(), name="handle_annotation"),
 ]
 
 
