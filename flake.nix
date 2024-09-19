@@ -79,6 +79,7 @@
               export LD_LIBRARY_PATH=${pkgs.linuxPackages.nvidia_x11}/lib
               export EXTRA_LDFLAGS="-L/lib -L${pkgs.linuxPackages.nvidia_x11}/lib"
               export EXTRA_CCFLAGS="-I/usr/include"
+              pip install -e /home/agl-admin/endoreg-db
 
 
             '';

@@ -1,13 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from endoreg_db.models.annotation import AnonymizedImageLabel, AnonymousImageAnnotation, Name
+from endoreg_db.models.annotation import AnonymizedImageLabel, AnonymousImageAnnotation, DroppedName
 import os
 import uuid
 import requests
 from django.conf import settings
-from .serializers import FileUploadSerializer
-from agl_anonymizer_pipeline.main import main
+#from .serializers import FileUploadSerializer
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import IsAuthenticated  # Optional, for secure API access
@@ -53,7 +52,7 @@ class ValidateAndSaveView(APIView):
 
             # Save the names
             for gender_par in data.get('gender_pars', []):
-                Name.objects.create(
+                DroppedName.objects.create(
                     annotation=annotation,
                     name=gender_par['name'],
                     gender=gender_par['gender'],
