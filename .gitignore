@@ -4,6 +4,7 @@ data/
 *decrypted~*
 endoreg_client_manager/endoreg_client_manager/staticfiles/
 .direnv/
+*\.log\.*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
